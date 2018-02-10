@@ -1,0 +1,3 @@
+http://ke.wang@hpe.com:Qq983002740$@proxy-ccy.houston.hp.com:8080
+http://ke.wang@hpe.com:Qq983002740$@web-proxy.atl.hp.com:8080
+http://ke.wang@hpe.com:Qq983002740$@web-proxy.cup.hp.com:8088
