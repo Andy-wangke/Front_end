@@ -6,5 +6,5 @@ This repo is a collection of samples of webscrawlers built using the python Scra
 
 # Requirements
 
-Python 3.x
-Scrapy 1.4
+- Python 3.x
+- Scrapy 1.4
