@@ -10,4 +10,5 @@ This repo is a collection of samples of webscrawlers built using the python Scra
 
 # Resources
 - https://github.com/g0v/twly_crawler
+- https://github.com/aivarsk/scrapy-proxies
 
