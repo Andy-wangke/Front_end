@@ -1,54 +1,52 @@
 # -*- coding: utf-8 -*-
 
-
 import sys
 import os
 from os.path import dirname
 path = dirname(dirname(os.path.abspath(os.path.dirname(__file__))))
-#print('current path:%s'% path)
+# print('current path:%s'% path)
 sys.path.append(path)
+sys.path.append(dirname(path))
 #print('sys path:%s'% sys.path)
-# Scrapy settings for tutorial project
+
+# Scrapy settings for stackoverflow_clockIn project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
 #
-#     http://doc.scrapy.org/en/latest/topics/settings.html
-#     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
-#     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
+#     https://doc.scrapy.org/en/latest/topics/settings.html
+#     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
+#     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'tutorial'
+BOT_NAME = 'stackoverflow_clockIn'
 
-SPIDER_MODULES = ['tutorial.spiders']
-NEWSPIDER_MODULE = 'tutorial.spiders'
+SPIDER_MODULES = ['stackoverflow_clockIn.spiders']
+NEWSPIDER_MODULE = 'stackoverflow_clockIn.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'tutorial (+http://www.yourdomain.com)'
+#USER_AGENT = 'stackoverflow_clockIn (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 2
+#CONCURRENT_REQUESTS = 32
 
-# Configure a delay for requests for the same website (default: 0 s)
-# See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
+# Configure a delay for requests for the same website (default: 0)
+# See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-DOWNLOAD_DELAY = 1
+DOWNLOAD_DELAY = 2
 # The download delay setting will honor only one of:
 CONCURRENT_REQUESTS_PER_DOMAIN = 1
 #CONCURRENT_REQUESTS_PER_IP = 16
 
+REDIRECT_ENABLED = True
 # Disable cookies (enabled by default)
-COOKIES_ENABLED = False
+#COOKIES_ENABLED = False
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED = False
-#telnet
-TELNETCONSOLE_HOST = '127.0.0.1'
-#The port range to use for the telnet console. If set to None or 0, a dynamically assigned port is used.
-TELNETCONSOLE_PORT = None
 
 # Override the default request headers:
 #DEFAULT_REQUEST_HEADERS = {
@@ -56,46 +54,40 @@ TELNETCONSOLE_PORT = None
 #   'Accept-Language': 'en',
 #}
 
-#keys are the middleware class path and the corresponding values are the middleware orders
-
 # Enable or disable spider middlewares
-# See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
-SPIDER_MIDDLEWARES = {
-     #'scrapy_deltafetch.DeltaFetch':50,
-#    'tutorial.middlewares.TutorialSpiderMiddleware': 543,
-}
+# See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
+# SPIDER_MIDDLEWARES = {
+#       #incremental or delta policy to fetch source data
+# #    'stcn.middlewares.TutorialSpiderMiddleware': 543,
+# }
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-      'scrapy.downloadermiddlewares.retry.RetryMiddleware': 90,
+      'scrapy.downloadermiddlewares.retry.RetryMiddleware': None,
+      'stackoverflow_clockIn.middlewares.ClockInCounterRetryMiddleware':90,
       'scrapy_proxies.RandomProxy' : 100,
       'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
-      #'tutorial.middlewares.MyCustomDownloaderMiddleware': 543,
-      'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-      #'tutorial.middlewares.RandomUserAgentMiddleware': 400,
-       'common.middlewares.RandomUserAgentMiddleware': 400,
+#    'stcn.middlewares.StcnSpiderMiddleware': 543,
 
+      'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+      'common.middlewares.RandomUserAgentMiddleware': 400,
 }
 
-#deltafetch 
-DELTAFETCH_ENABLED = True
-DELTAFETCH_DIR = 'DeltaFetchDir/'
-
 # Enable or disable extensions
-# See http://scrapy.readthedocs.org/en/latest/topics/extensions.html
+# See https://doc.scrapy.org/en/latest/topics/extensions.html
 #EXTENSIONS = {
 #    'scrapy.extensions.telnet.TelnetConsole': None,
 #}
 
 # Configure item pipelines
-# See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
+# See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 #ITEM_PIPELINES = {
-#    'tutorial.pipelines.TutorialPipeline': 300,
+#    'stackoverflow.pipelines.StackoverflowPipeline': 300,
 #}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
-# See http://doc.scrapy.org/en/latest/topics/autothrottle.html
+# See https://doc.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True
 # The initial download delay
 #AUTOTHROTTLE_START_DELAY = 5
@@ -108,12 +100,18 @@ DELTAFETCH_DIR = 'DeltaFetchDir/'
 #AUTOTHROTTLE_DEBUG = False
 
 # Enable and configure HTTP caching (disabled by default)
-# See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
-#HTTPCACHE_ENABLED = True
-#HTTPCACHE_EXPIRATION_SECS = 0
-#HTTPCACHE_DIR = 'httpcache'
-#HTTPCACHE_IGNORE_HTTP_CODES = []
-#HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+# See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
+HTTPCACHE_ENABLED = False
+HTTPCACHE_EXPIRATION_SECS = 600
+HTTPCACHE_DIR = '/stcnhttpcache/'
+#don't cache response with these http codes
+HTTPCACHE_IGNORE_HTTP_CODES = [500, 503, 504, 400, 403, 404, 408]
+HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+# requests not found in the cache will be ignored instead of downloaded
+HTTPCACHE_IGNORE_MISSING = True
+#don't cache responses with these URI schemes
+HTTPCACHE_IGNORE_SCHEMES = ['file']
+HTTPCACHE_POLICY= 'scrapy.extensions.httpcache.DummyPolicy'
 
 #Log
 LOG_ENABLED = True
@@ -121,29 +119,11 @@ LOG_ENCODING = 'utf-8'
 LOG_FILE = 'scrapy.log'
 LOG_LEVEL='DEBUG'
 
-#feed export
-FEED_URI = 'feeds/%(name)s/%(time)s.json'
-FEED_FORMAT = 'json'
-#FEED_EXPORT_FIELDS = None
-FEED_STORE_EMPTY = False
 
-#Mail
-MAIL_FROM = 'from@test.com'
-MAIL_HOST = 'smtp3.test.com'
-#MAIL_PORT = 25
-#MAIL_USER = ''
-#MAIL_PASS = ''
-MAIL_TLS = False
-MAIL_SSL  = False
-
-
-
-
-##RetryMiddleware Settings
-
+#Retry
 RETRY_ENABLED=True
 #Retry many times since proxies often fail
-RETRY_TIMES=3
+RETRY_TIMES=2
 #Retry on most error codes since proxies fail for different reasons
 RETRY_HTTP_CODES=[500, 503, 504, 400, 403, 404, 408]
 
@@ -157,9 +137,7 @@ PROXY_MODE = 0
 # http://host1:port
 # http://username:password@host2:port
 # http://host3:port
-# ...
-PROXY_LIST = path'\\proxy_list.txt'
+# ...P
+PROXY_LIST = path+'\\proxy_pool.txt'
 #if proxy mode is 2 ,then uncomment this line
-#CUSTOM_PROXY = "http://usernm:pass@host:8080"
-
-
+#CUSTOM_PROXY = "http://usr:pwd@hostname:port"

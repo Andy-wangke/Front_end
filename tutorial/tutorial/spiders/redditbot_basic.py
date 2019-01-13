@@ -18,7 +18,7 @@ class RedditbotSpider(scrapy.Spider):
     def parse(self, response):
     	mailer = MailSender.from_settings(settings)
     	try:
-        	mailer.send(to=["ke.wang@hpe.com"],subject="scrapy spider",body="test message",cc=['ke.wang@hpe.com'],charset="utf-8")
+        	mailer.send(to=["test@test.com"],subject="scrapy spider",body="test message",cc=['test@test.com'],charset="utf-8")
     	except Exception as e :
         	msg = "Error occurred...{0}".format(str(e))
         	print(msg)

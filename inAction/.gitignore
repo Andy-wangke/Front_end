@@ -25,3 +25,7 @@ outfile.txt
 export/
 feeds/
 subscribe/
+
+#stackoverflow 
+counter_record.txt
+proxy_pool.txt

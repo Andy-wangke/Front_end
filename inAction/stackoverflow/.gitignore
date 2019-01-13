@@ -1,0 +1,11 @@
+*.json
+*.log
+*.class
+
+## scrapy for python3
+__pycache__/
+.scrapy/
+scrapy.log
+
+#stackoverflow 
+counter_record.txt
