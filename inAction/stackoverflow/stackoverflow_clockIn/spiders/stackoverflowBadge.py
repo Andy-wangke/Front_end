@@ -43,8 +43,8 @@ class SOBadgeCounter(scrapy.Spider):
     allowed_domains = ['stackoverflow.com']
     #start_urls = ['https://stackoverflow.com/users/6891192/andywang?tab=reputation'] 
     #counter=0
-    counter_css_path='div#top-cards aside.-badges span.-count::text'
-
+    #counter_css_path='div#top-cards aside.-badges span.-count::text'
+    counter_css_path='div#top-cards aside.js-highlight-box-badges span.fs-caption::text'
     # fill post forms and login
     def start_requests(self):
         urls=[
@@ -82,7 +82,7 @@ class SOBadgeCounter(scrapy.Spider):
     def fetch_badges_info(self, response):
         logging.info("response.status:%s"%response.status)
         counter = response.selector.css(self.counter_css_path).extract()
-        logging.info('response.badge.counter:%s'%counter)
+        logging.info('response.badge.counter:%s'%counter)#TODO if counter is null,retry
         current_timeframe=datetime.now().strftime('%Y-%m-%d %H:%M')
         msg='StackOverflow login count reminder,current date in UTC+8 {0} badge counter is {1}'.format(current_timeframe,counter[0])
         sendeBay(msg,'[REMINDER]Stackoverflow AutoRun!!!')

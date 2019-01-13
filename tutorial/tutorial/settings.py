@@ -128,11 +128,11 @@ FEED_FORMAT = 'json'
 FEED_STORE_EMPTY = False
 
 #Mail
-MAIL_FROM = 'liang.yan@hpe.com'
-MAIL_HOST = 'smtp3.hpe.com'
+MAIL_FROM = 'from@test.com'
+MAIL_HOST = 'smtp3.test.com'
 #MAIL_PORT = 25
-#MAIL_USER = 'ke.wang@hpe.com'
-#MAIL_PASS = 'Qq983002740$'
+#MAIL_USER = ''
+#MAIL_PASS = ''
 MAIL_TLS = False
 MAIL_SSL  = False
 
@@ -158,8 +158,8 @@ PROXY_MODE = 0
 # http://username:password@host2:port
 # http://host3:port
 # ...
-PROXY_LIST = 'C:\\Users\\kewan\\ENV\\Scripts\\scrapy_samples\\tutorial\\tutorial\\proxy_list.txt'
+PROXY_LIST = path'\\proxy_list.txt'
 #if proxy mode is 2 ,then uncomment this line
-#CUSTOM_PROXY = "http://ke.wang@hpe.com:Qq983002740$@web-proxy.atl.hp.com:8080"
+#CUSTOM_PROXY = "http://usernm:pass@host:8080"
 
 

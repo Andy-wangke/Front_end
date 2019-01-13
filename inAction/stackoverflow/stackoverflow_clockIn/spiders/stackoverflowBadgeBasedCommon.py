@@ -19,7 +19,7 @@ def call():
     urllib.request.urlopen(STACKOVERFLOW_SELF_URL)
 
 
-class StackOverflowBadgeBasedCommon(CrawlSpider):
+class StackOverflowBadgeBasedCommon(CommonSpider):
     '''
         Scrapes login badge count to record and compare with the previous day(counted in UTC),if count+1,then finish,otherwise,retry
         How to retry?

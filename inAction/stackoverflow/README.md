@@ -2,6 +2,12 @@
 
 Spider for Stackoverflow clockIn Counter
 
+## Process
+1) write script to open up stackoverflow clockIn 
+2) schedule job daily
+3) after that,run the spider to retrieve counter and compare with previous counter
+4) retry script if neccessary
+
 
 ## Change Log
 

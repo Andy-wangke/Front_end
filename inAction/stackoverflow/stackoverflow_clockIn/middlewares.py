@@ -117,9 +117,32 @@ try:
 except:
     counter_in_file=open(counter_file,'w')
 
+import subprocess
+import sys
+#get project setting file from settings.py
+from scrapy.utils.project import get_project_settings
+
+setting=get_project_settings();
+
+def retryProcess():
+    '''
+        retry the trigger tool 
+    '''
+    try:
+        base_dir='C:\\Users\\kwang6\\eBayWorks\\'
+        bat=''
+        cmd=[base_dir+"stackoverflow_trigger.bat"]
+        logger.info('ready cmd to run: %s \n'%cmd)
+
+        ecode=subprocess.check_call(cmd)
+        logger.info('Python exit code : %s'%ecode)
+    except subprocess.CalledProcessError as e:
+        logger.error("python run cmd exit code: %s\n"%e.returncode)
+        #sys.exit(e.returncode)
+
 class ClockInCounterRetryMiddleware(RetryMiddleware):
 
-    #TODO close file 
+    #TODO close file to avoid io volume
     def process_response(self, request, response, spider):
         # Called with the response returned from the downloader.
         if request.meta.get('dont_retry', False):
@@ -137,6 +160,7 @@ class ClockInCounterRetryMiddleware(RetryMiddleware):
                 file_append.write(current_timeframe+' '+counter+'\n')
             elif len(counter_in_file)>1 and yesterday_timeframe in counter_in_file[-2] and yesterday_timeframe+' '+(str(int(counter.split('/')[0])-1)+'/'+counter.split('/')[1])+'\n' not in counter_in_file:#counter_in_file[-1]
                     #compare last line to check whether counter same as previous day
+                    #retryProcess()
                     return self._retry(request,'counter same as previous day,thus retry...{}'.format(counter), spider) or response
         return response
 
@@ -150,3 +174,6 @@ class ClockInCounterRetryMiddleware(RetryMiddleware):
     # - return a Request object: stops process_exception() chain
         counter_in_file.close()
         file_append.close()
+
+
+

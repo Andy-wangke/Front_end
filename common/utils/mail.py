@@ -7,6 +7,10 @@ logger = logging.getLogger(__name__)
 
 
 #send to NetEase via twisted mail component
+#Env  endpoint
+#Dev  atom.corp.ebay.com
+#Feature/Staging  mailhost.qa.ebay.com
+#Prd  mx.vip.ebay.com
 def sendeBay(message,subject,sender = 'ScriptAutoRun@atom.corp.ebay.com',recipients = ['kwang6@ebay.com','andy_wang_ke@163.com']):
     logger.log(logging.INFO,'start sending email reminder from eBay.')
     host='atom.corp.ebay.com'
@@ -86,6 +90,7 @@ def sendHtmlViasmtplib(message,subject,sender,recipients,host):
     <body>
         <p>Hi!<br>
            How are you?<br>
+           A brand new Day coming!<br>
            <b>%s</b>
         </p>
     </body>
